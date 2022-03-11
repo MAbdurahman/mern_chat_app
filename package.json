@@ -1,8 +1,33 @@
 {
-  "name": "mern-chat-app",
+  "name": "mern_chat_app",
   "version": "1.0.0",
-  "description": "MongoDB, Express, React, NodeJS, Socket.io",
+  "description": "MERN Stack Application",
   "main": "index.js",
   "author": "Mahdi Abdurrahman",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MAbdurahman/mern_chat_app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MAbdurahman/mern_chat_app/issues"
+  },
+  "homepage": "https://github.com/MAbdurahman/mern_chat_app#readme",
+  "keywords": [
+    "mongodb",
+    "express",
+    "react",
+    "node",
+    "socket.io"
+  ],
+  "nodemonConfig": {
+    "delay": "2000"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
 }
