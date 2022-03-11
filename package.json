@@ -1,0 +1,8 @@
+{
+  "name": "mern-chat-app",
+  "version": "1.0.0",
+  "description": "MongoDB, Express, React, NodeJS, Socket.io",
+  "main": "index.js",
+  "author": "Mahdi Abdurrahman",
+  "license": "MIT"
+}
