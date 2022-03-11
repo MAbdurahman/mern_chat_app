@@ -17,8 +17,8 @@ app.use(express.json());
 //**************** import all routes ****************//
 
 //**************** app routes ****************//
-app.get('/api/v1', (req, res) => {
-	res.send('Welcome Job Trackers');
+app.get('/', (req, res) => {
+	res.send('Welcome to Chit-Chat!');
 });
 
 //**************** handle errors middleware ****************//
