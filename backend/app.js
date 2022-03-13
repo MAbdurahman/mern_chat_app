@@ -2,6 +2,11 @@
 const express = require('express');
 const morgan = require('morgan');
 const colors = require('colors');
+const userRoutes = require('./routes/userRoutes');
+const {
+	errorHandlerMiddleware,
+	notFoundMiddleware,
+} = require('./middlewares/errorHandlerMiddleware');
 
 //**************** setting up config file ****************//
 if (process.env.NODE_ENV !== 'PRODUCTION')
@@ -17,18 +22,15 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
 app.use(express.json());
 
 //**************** import all routes ****************//
-
+const userRouter = require('./routes/userRoutes');
 //**************** app routes ****************//
-app.get('/api', (req, res) => {
+app.get('/api/v1/', (req, res) => {
 	res.send('Welcome to Chit-Chat!');
-});
-app.get('/api/chat', (req, res) => {
-	res.send('Chat Page')
-})
-app.get('/api/chat/:id', (req, res) => {
-	res.send(`Welcome user - ${req.params.id}`)
-})
+}); 
+app.use('/api/v1/user', userRouter);
 
 //**************** handle errors middleware ****************//
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 module.exports = app;

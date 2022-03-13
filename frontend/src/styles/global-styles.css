@@ -90,6 +90,8 @@ a {
 .app {
 	min-height: 100vh;
 	display: flex;
+	justify-content:center;
+	align-items: center;
 	background-image: url("./../background.png");
 	background-position: center;
 	background-size: cover;
