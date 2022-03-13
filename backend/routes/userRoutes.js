@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { signUpUser } = require('./../controllers/userControllers');
+const { signUpUser, signInUser } = require('./../controllers/userControllers');
 
 
 
@@ -10,6 +10,6 @@ const router = express.Router();
 
 //**************** user routes ****************//
 router.route('/signup').post(signUpUser);
-/* router.route('/signin').post(authUser); */
+router.route('/signin').post(signInUser); 
 
 module.exports = router;

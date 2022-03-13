@@ -5,15 +5,15 @@ const generateToken = require('./../utils/generateToken');
 /*======================================================
          Sign-Up User (POST) -> /api/user/signup
 =========================================================*/
-const signUpUser = asyncHandler( async(req, res) => {
-   const { name, email, password, pic } = req.body;
+const signUpUser = asyncHandler(async (req, res) => {
+	const { name, email, password, pic } = req.body;
 
-   if (!name || !email || !password) {
+	if (!name || !email || !password) {
 		res.status(400);
 		throw new Error('Enter a value in all fields!');
 	}
 
-   const userExists = await User.findOne({ email });
+	const userExists = await User.findOne({ email });
 
 	if (userExists) {
 		res.status(400);
@@ -27,7 +27,7 @@ const signUpUser = asyncHandler( async(req, res) => {
 		pic,
 	});
 
-   if (user) {
+	if (user) {
 		res.status(201).json({
 			_id: user._id,
 			name: user.name,
@@ -40,12 +40,29 @@ const signUpUser = asyncHandler( async(req, res) => {
 		res.status(400);
 		throw new Error('User Creation Unsuccessful!');
 	}
+});
 
-})
+/*======================================================
+         Sign-In User (POST) -> /api/user/signin
+=========================================================*/
+const signInUser = asyncHandler(async (req, res) => {
+	const { email, password } = req.body;
 
+	const user = await User.findOne({ email });
 
+	if (user && (await user.matchPassword(password))) {
+		res.json({
+			_id: user._id,
+			name: user.name,
+			email: user.email,
+			isAdmin: user.isAdmin,
+			pic: user.pic,
+			token: generateToken(user._id),
+		});
+	} else {
+		res.status(401);
+		throw new Error('Invalid Email or Password!');
+	}
+});
 
-
-
-
-module.exports = { signUpUser };
+module.exports = { signUpUser, signInUser };
