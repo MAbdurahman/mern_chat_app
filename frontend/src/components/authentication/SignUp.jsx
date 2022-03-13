@@ -26,7 +26,7 @@ export default function SignUp() {
 		setPicLoading(true);
 		if (!name || !email || !password || !confirmPassword) {
 			toast({
-				title: 'Please values for all fields!',
+				title: 'Enter Values In All Fields!',
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
@@ -37,7 +37,7 @@ export default function SignUp() {
 		}
 		if (password !== confirmPassword) {
 			toast({
-				title: 'Passwords Do Not Match',
+				title: 'Passwords Do Not Match!',
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
@@ -53,7 +53,7 @@ export default function SignUp() {
 				},
 			};
 			const { data } = await axios.post(
-				'/api/user',
+				'/api/v1/user',
 				{
 					name,
 					email,
@@ -64,7 +64,7 @@ export default function SignUp() {
 			);
 			console.log(data);
 			toast({
-				title: 'Registration Successful',
+				title: 'Successfully Signed Up!',
 				status: 'success',
 				duration: 5000,
 				isClosable: true,
@@ -90,7 +90,7 @@ export default function SignUp() {
 		setPicLoading(true);
 		if (pics === undefined) {
 			toast({
-				title: 'Please Select an Image!',
+				title: 'Please Select An Image!',
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
@@ -103,8 +103,8 @@ export default function SignUp() {
 			const data = new FormData();
 			data.append('file', pics);
 			data.append('upload_preset', `${process.env.REACT_APP_CLOUDINARY_APP}`);
-			data.append('cloud_name', `${process.env.REACT_APP_NAME}`);
-			fetch(`${process.env.REACT_APP_URL}`, {
+			data.append('cloud_name', `${process.env.REACT_APP_CLOUDINARY_USERNAME}`);
+			fetch(`${process.env.REACT_APP_CLOUDINARY_URL}`, {
 				method: 'post',
 				body: data,
 			})
@@ -120,7 +120,7 @@ export default function SignUp() {
 				});
 		} else {
 			toast({
-				title: 'Please Select an Image!',
+				title: 'Please Select An Image!',
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
@@ -137,7 +137,7 @@ export default function SignUp() {
 				<FormLabel>Name</FormLabel>
 				<Input placeholder='name' onChange={e => setName(e.target.value)} />
 			</FormControl>
-			<FormControl id='email' isRequired>
+			<FormControl id='email-1' isRequired>
 				<FormLabel>Email</FormLabel>
 				<Input
 					type='email'
@@ -145,7 +145,7 @@ export default function SignUp() {
 					onChange={e => setEmail(e.target.value)}
 				/>
 			</FormControl>
-			<FormControl id='password' isRequired>
+			<FormControl id='password-1' isRequired>
 				<FormLabel>Password</FormLabel>
 				<InputGroup size='md'>
 					<Input
@@ -160,7 +160,7 @@ export default function SignUp() {
 					</InputRightElement>
 				</InputGroup>
 			</FormControl>
-			<FormControl id='password' isRequired>
+			<FormControl id='password-2' isRequired>
 				<FormLabel>Confirm Password</FormLabel>
 				<InputGroup size='md'>
 					<Input
