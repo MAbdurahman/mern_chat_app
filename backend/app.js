@@ -19,9 +19,12 @@ app.use(express.json());
 //**************** import all routes ****************//
 
 //**************** app routes ****************//
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
 	res.send('Welcome to Chit-Chat!');
 });
+app.get('/api/chat', (req, res) => {
+	res.send('Chat Page')
+})
 app.get('/api/chat/:id', (req, res) => {
 	res.send(`Welcome user - ${req.params.id}`)
 })
