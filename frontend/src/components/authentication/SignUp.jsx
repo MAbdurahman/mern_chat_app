@@ -30,7 +30,7 @@ export default function SignUp() {
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			setPicLoading(false);
 			return;
@@ -41,7 +41,7 @@ export default function SignUp() {
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			return;
 		}
@@ -53,7 +53,7 @@ export default function SignUp() {
 				},
 			};
 			const { data } = await axios.post(
-				'/api/v1/user',
+				'/api/v1/user/signup',
 				{
 					name,
 					email,
@@ -68,7 +68,7 @@ export default function SignUp() {
 				status: 'success',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			localStorage.setItem('userInfo', JSON.stringify(data));
 			setPicLoading(false);
@@ -80,7 +80,7 @@ export default function SignUp() {
 				status: 'error',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			setPicLoading(false);
 		}
@@ -94,7 +94,7 @@ export default function SignUp() {
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			return;
 		}
@@ -124,7 +124,7 @@ export default function SignUp() {
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			setPicLoading(false);
 			return;

@@ -2,7 +2,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const colors = require('colors');
-const userRoutes = require('./routes/userRoutes');
+/* const userRoutes = require('./routes/userRoutes'); */
 const {
 	errorHandlerMiddleware,
 	notFoundMiddleware,
@@ -22,12 +22,12 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
 app.use(express.json());
 
 //**************** import all routes ****************//
-const userRouter = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
 //**************** app routes ****************//
 app.get('/api/v1/', (req, res) => {
 	res.send('Welcome to Chit-Chat!');
 }); 
-app.use('/api/v1/user', userRouter);
+app.use('/api/v1/user', userRoutes);
 
 //**************** handle errors middleware ****************//
 app.use(notFoundMiddleware);
