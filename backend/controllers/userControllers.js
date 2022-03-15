@@ -1,12 +1,19 @@
 const User = require('./../models/userModel');
 const asyncHandler = require('express-async-handler');
+const cloudinary = require('cloudinary');
 const generateToken = require('./../utils/generateToken');
 
 /*======================================================
-         Sign-Up User (POST) -> /api/user/signup
+         Sign-Up User (POST) -> /api/v1/user/signup
 =========================================================*/
 const signUpUser = asyncHandler(async (req, res) => {
 	const { name, email, password, pic } = req.body;
+
+	const picResult = await cloudinary.v2.uploader.upload(pic, {
+		folder: 'mern-chat-app/users',
+		width: 150,
+		crop: 'scale',
+	});
 
 	if (!name || !email || !password) {
 		res.status(400);
@@ -17,14 +24,17 @@ const signUpUser = asyncHandler(async (req, res) => {
 
 	if (userExists) {
 		res.status(400);
-		throw new Error('User already exists!');
+		throw new Error('Email already exists!');
 	}
 
 	const user = await User.create({
 		name,
 		email,
 		password,
-		pic,
+		pic: {
+			public_id: picResult.public_id,
+			url: picResult.secure_url,
+		},
 	});
 
 	if (user) {
@@ -42,14 +52,25 @@ const signUpUser = asyncHandler(async (req, res) => {
 	}
 });
 
-/*======================================================
-         Sign-In User (POST) -> /api/user/signin
-=========================================================*/
+/*=========================================================
+         Sign-In User (POST) -> /api/v1/user/signin
+============================================================*/
 const signInUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body;
 
-	const user = await User.findOne({ email });
+	//***** check if email and password is entered by user ******//
+	if (!email || !password) {
+		throw new Error('Please enter email and password!', 400);
+	}
 
+	//**************** finding user in database ****************//
+	const user = await User.findOne({ email }).select('+password');
+
+	if (!user) {
+		throw new Error('Invalid email or password!', 401);
+	}
+
+	//**************** check if password is correct ****************//
 	if (user && (await user.matchPassword(password))) {
 		res.json({
 			_id: user._id,
@@ -61,7 +82,7 @@ const signInUser = asyncHandler(async (req, res) => {
 		});
 	} else {
 		res.status(401);
-		throw new Error('Invalid Email or Password!');
+		throw new Error('Invalid Email or Password!', 401);
 	}
 });
 
