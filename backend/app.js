@@ -2,7 +2,6 @@
 const express = require('express');
 const morgan = require('morgan');
 const colors = require('colors');
-/* const userRoutes = require('./routes/userRoutes'); */
 const {
 	errorHandlerMiddleware,
 	notFoundMiddleware,
