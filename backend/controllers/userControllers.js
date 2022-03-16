@@ -9,12 +9,6 @@ const generateToken = require('./../utils/generateToken');
 const signUpUser = asyncHandler(async (req, res) => {
 	const { name, email, password, pic } = req.body;
 
-	const picResult = await cloudinary.v2.uploader.upload(pic, {
-		folder: 'mern-chat-app/users',
-		width: 150,
-		crop: 'scale',
-	});
-
 	if (!name || !email || !password) {
 		res.status(400);
 		throw new Error('Enter a value in all fields!');
@@ -31,10 +25,7 @@ const signUpUser = asyncHandler(async (req, res) => {
 		name,
 		email,
 		password,
-		pic: {
-			public_id: picResult.public_id,
-			url: picResult.secure_url,
-		},
+		pic
 	});
 
 	if (user) {

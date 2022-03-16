@@ -49,7 +49,7 @@ export default function SignUp() {
 		try {
 			const config = {
 				headers: {
-					'Content-type': 'application/json',
+					'Content-Type': 'application/json',
 				},
 			};
 			const { data } = await axios.post(
@@ -73,6 +73,7 @@ export default function SignUp() {
 			localStorage.setItem('userInfo', JSON.stringify(data));
 			setPicLoading(false);
 			history.push('/chats');
+
 		} catch (error) {
 			toast({
 				title: 'Error Occurred!',
@@ -102,16 +103,22 @@ export default function SignUp() {
 		if (pics.type === 'image/jpeg' || pics.type === 'image/png') {
 			const data = new FormData();
 			data.append('file', pics);
-			data.append('upload_preset', `${process.env.REACT_APP_CLOUDINARY_APP}`);
-			data.append('cloud_name', `${process.env.REACT_APP_CLOUDINARY_USERNAME}`);
+			data.append(
+				'upload_preset',
+				`${process.env.REACT_APP_CLOUDINARY_APP_NAME}`
+			);
+			data.append(
+				'cloud_name',
+				`${process.env.REACT_APP_CLOUDINARY_USERNAME}`
+			);
 			fetch(`${process.env.REACT_APP_CLOUDINARY_URL}`, {
-				method: 'post',
+				method: 'POST',
 				body: data,
 			})
 				.then(res => res.json())
 				.then(data => {
-					setPic(data.url.toString());
-					console.log(data.url.toString());
+					setPic(data.url);
+					console.log(data.url);
 					setPicLoading(false);
 				})
 				.catch(err => {

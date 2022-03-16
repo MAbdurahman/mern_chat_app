@@ -31,16 +31,10 @@ const userModel = mongoose.Schema({
 		select: false,
 	},
 	pic: {
-		public_id: {
-			type: String,
-			required: true,
-		},
-		url: {
-			type: String,
-			required: true,
-			default:
-				'https://res.cloudinary.com/mdbdrrhm/image/upload/v1635086610/people/default-user_dmmlom.png',
-		},
+		type: String,
+		require: true,
+		default:
+			'https://res.cloudinary.com/mdbdrrhm/image/upload/v1635086610/people/default-user_dmmlom.png',
 	},
 	isAdmin: {
 		type: Boolean,
