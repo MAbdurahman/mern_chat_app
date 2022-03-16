@@ -23,11 +23,11 @@ export default function SignIn() {
 		setLoading(true);
 		if (!email || !password) {
 			toast({
-				title: 'Please Fill all the Feilds',
+				title: 'Enter Values In All Fields!',
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			setLoading(false);
 			return;
@@ -37,27 +37,28 @@ export default function SignIn() {
 		try {
 			const config = {
 				headers: {
-					'Content-type': 'application/json',
+					'Content-Type': 'application/json',
 				},
 			};
 
 			const { data } = await axios.post(
-				'/api/user/login',
+				'/api/v1/user/signin',
 				{ email, password },
 				config
 			);
 
 			// console.log(JSON.stringify(data));
 			toast({
-				title: 'Login Successful',
+				title: 'Successfully Signed In!',
 				status: 'success',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			localStorage.setItem('userInfo', JSON.stringify(data));
 			setLoading(false);
 			history.push('/chats');
+
 		} catch (error) {
 			toast({
 				title: 'Error Occurred!',
@@ -65,7 +66,7 @@ export default function SignIn() {
 				status: 'error',
 				duration: 5000,
 				isClosable: true,
-				position: 'bottom',
+				position: 'top-right',
 			});
 			setLoading(false);
 		}
@@ -113,7 +114,7 @@ export default function SignIn() {
 				width='100%'
 				onClick={() => {
 					setEmail('guest@example.com');
-					setPassword('123456');
+					setPassword('abcd1234');
 				}}
 			>
 				Guest User Credentials
