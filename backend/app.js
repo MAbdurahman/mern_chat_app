@@ -22,11 +22,13 @@ app.use(express.json());
 
 //**************** import all routes ****************//
 const userRoutes = require('./routes/userRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 //**************** app routes ****************//
 app.get('/api/v1/', (req, res) => {
 	res.send('Welcome to Chit-Chat!');
 }); 
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/chats', chatRoutes);
 
 //**************** handle errors middleware ****************//
 app.use(notFoundMiddleware);
