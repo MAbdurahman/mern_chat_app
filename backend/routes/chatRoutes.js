@@ -15,10 +15,10 @@ const router = express.Router();
 //**************** chat routes ****************//
 router.route('/').post(protected, accessChat);
 router.route('/').get(protected, fetchChats);
-router.route('/creategroup').post(protected, createGroupChat);
-router.route('/renamegroup').put(protected, renameGroup);
-router.route('/removegroup').put(protected, removeFromGroup);
-router.route('/addtogroup').put(protected, addToGroup);
+router.route('/create-group').post(protected, createGroupChat);
+router.route('/rename-group').put(protected, renameGroup);
+router.route('/remove-from-group').put(protected, removeFromGroup);
+router.route('/add-to-group').put(protected, addToGroup);
 
 
 module.exports = router;
