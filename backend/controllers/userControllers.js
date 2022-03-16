@@ -1,6 +1,5 @@
 const User = require('./../models/userModel');
 const asyncHandler = require('express-async-handler');
-const cloudinary = require('cloudinary');
 const generateToken = require('./../utils/generateToken');
 
 /*======================================================
@@ -25,7 +24,7 @@ const signUpUser = asyncHandler(async (req, res) => {
 		name,
 		email,
 		password,
-		pic
+		pic,
 	});
 
 	if (user) {
@@ -77,4 +76,24 @@ const signInUser = asyncHandler(async (req, res) => {
 	}
 });
 
-module.exports = { signUpUser, signInUser };
+/*=========================================================
+         Get All-Users (GET) -> api/v1/user?search=
+============================================================*/
+const getAllUsers = asyncHandler(async (req, res) => {
+	const keyword = req.query.search
+		? {
+				$or: [
+					{ name: { $regex: req.query.search, $options: 'i' } },
+					{ email: { $regex: req.query.search, $options: 'i' } },
+				],
+		}
+		: {};
+
+	const users = await User.find(keyword).find({
+		_id: { $ne: req.user._id },
+	});
+
+	res.send(users);
+});
+
+module.exports = { signUpUser, signInUser, getAllUsers };
