@@ -24,8 +24,11 @@ import {
 import { BellIcon, ChevronDownIcon, Search2Icon } from '@chakra-ui/icons';
 import { Avatar } from '@chakra-ui/avatar';
 import { useToast } from '@chakra-ui/toast';
+import { Spinner } from '@chakra-ui/spinner';
 import NotificationBadge, { Effect } from 'react-notification-badge';
 import ProfileModal from './ProfileModal';
+import ChatLoading from './../ChatLoading';
+import UserListItem from '../avatar/UserListItem';
 
 export default function SideDrawer() {
 	//**************** variables ****************//
@@ -52,6 +55,76 @@ export default function SideDrawer() {
 		localStorage.removeItem('userInfo');
 		history.push('/');
 	};
+
+	const handleSearch = async () => {
+		if (!search) {
+			toast({
+				title: 'Enter something to search in text field!',
+				status: 'warning',
+				duration: 5000,
+				isClosable: true,
+				position: 'top-left',
+			});
+			return;
+		}
+
+		try {
+			setLoading(true);
+
+			const config = {
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+
+			const { data } = await axios.get(
+				`/api/v1/user?search=${search}`,
+				config
+			);
+
+			setLoading(false);
+			setSearchResult(data);
+		} catch (error) {
+			toast({
+				title: 'Error Occurred!',
+				description: 'Failed to Load the Search Results!',
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+				position: 'bottom-left',
+			});
+		}
+	};
+
+	const accessChat = async userId => {
+		console.log(userId);
+
+		try {
+			setLoadingChat(true);
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+			const { data } = await axios.post(`/api/v1/chats`, { userId }, config);
+
+			if (!chats.find(c => c._id === data._id)) setChats([data, ...chats]);
+			setSelectedChat(data);
+			setLoadingChat(false);
+			onClose();
+		} catch (error) {
+			toast({
+				title: 'Error Fetching The Chats!',
+				description: error.message,
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+				position: 'bottom-left',
+			});
+		}
+	};
+
 	return (
 		<>
 			<Box
@@ -63,7 +136,7 @@ export default function SideDrawer() {
 				p='5px 10px 5px 10px'
 				borderWidth='5px'
 			>
-				<Button variant='ghost'>
+				<Button variant='ghost' onClick={onOpen}>
 					<Search2Icon />
 					<ReactTooltip
 						id='search'
@@ -142,7 +215,7 @@ export default function SideDrawer() {
 				</div>
 			</Box>
 
-			<Drawer placement='left'>
+			<Drawer placement='left' onClose={onClose} isOpen={isOpen}>
 				<DrawerOverlay />
 				<DrawerContent>
 					<DrawerHeader borderBottomWidth='1px'>Search Users</DrawerHeader>
@@ -151,12 +224,12 @@ export default function SideDrawer() {
 							<Input
 								placeholder='Search by name or email'
 								mr={2}
-								/* value={search}
-								onChange={e => setSearch(e.target.value)} */
+								value={search}
+								onChange={e => setSearch(e.target.value)}
 							/>
-							<Button>Go</Button>
+							<Button onClick={handleSearch}>Go</Button>
 						</Box>
-						{/* 						{loading ? (
+						{loading ? (
 							<ChatLoading />
 						) : (
 							searchResult?.map(user => (
@@ -166,8 +239,8 @@ export default function SideDrawer() {
 									handleFunction={() => accessChat(user._id)}
 								/>
 							))
-						)} */}
-						{/* {loadingChat && <Spinner ml='auto' d='flex' />} */}
+						)}
+						{loadingChat && <Spinner ml='auto' d='flex' />}
 					</DrawerBody>
 				</DrawerContent>
 			</Drawer>
