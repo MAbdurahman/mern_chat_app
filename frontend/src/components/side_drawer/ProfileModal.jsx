@@ -34,7 +34,7 @@ export default function ProfileModal({ user, children }) {
 				<ModalOverlay />
 				<ModalContent h='410px'>
 					<ModalHeader
-						fontSize='40px'
+						fontSize={{base: '20px', md: '36px'}}
 						fontFamily='Montserrat'
 						d='flex'
 						justifyContent='center'
@@ -55,7 +55,7 @@ export default function ProfileModal({ user, children }) {
 							alt={user.name}
 						/>
 						<Text
-							fontSize={{ base: '12px', md: '16px' }}
+							fontSize={{ base: '12px', md: '18px' }}
 							fontFamily='Anonymous Pro'
 						>
 							Email: {user.email}

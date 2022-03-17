@@ -84,6 +84,7 @@ export default function SideDrawer() {
 
 			setLoading(false);
 			setSearchResult(data);
+			
 		} catch (error) {
 			toast({
 				title: 'Error Occurred!',

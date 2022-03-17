@@ -110,3 +110,13 @@ a {
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
 }
+
+/*=============================================
+         messages
+================================================*/
+.messages {
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	scrollbar-width: none;
+}
