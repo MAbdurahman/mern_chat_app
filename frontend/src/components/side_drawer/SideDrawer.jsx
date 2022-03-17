@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { ChatState } from '../../context/chatContext';
+import ReactTooltip from 'react-tooltip';
 import { Button } from '@chakra-ui/button';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Input } from '@chakra-ui/input';
@@ -17,13 +21,30 @@ import {
 	DrawerHeader,
 	DrawerOverlay,
 } from '@chakra-ui/modal';
-import { Tooltip } from '@chakra-ui/tooltip';
-import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { BellIcon, ChevronDownIcon, Search2Icon } from '@chakra-ui/icons';
 import { Avatar } from '@chakra-ui/avatar';
-
-import NotificationBadge from 'react-notification-badge';
+import { useToast } from '@chakra-ui/toast';
+import NotificationBadge, { Effect } from 'react-notification-badge';
 
 export default function SideDrawer() {
+	//**************** variables ****************//
+	const [search, setSearch] = useState('');
+	const [searchResult, setSearchResult] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [loadingChat, setLoadingChat] = useState(false);
+
+	const {
+		setSelectedChat,
+		user,
+		notification,
+		setNotification,
+		chats,
+		setChats,
+	} = ChatState();
+
+	const toast = useToast();
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const history = useHistory();
 	return (
 		<>
 			<Box
@@ -35,18 +56,27 @@ export default function SideDrawer() {
 				p='5px 10px 5px 10px'
 				borderWidth='5px'
 			>
-				<Tooltip
-					label='Search Users to chat'
-					hasArrow
-					placement='bottom-end'
-				>
-					<Button variant='ghost' >
-						<i className='fas fa-search'></i>
-						<Text d={{ base: 'none', md: 'flex' }} px={4}>
-							Search User
-						</Text>
-					</Button>
-				</Tooltip>
+				<Button variant='ghost'>
+					<Search2Icon />
+					<ReactTooltip
+						id='search'
+						aria-haspopup='true'
+						place='top'
+						type='dark'
+						effect='float'
+					>
+						<p>Search For User To Chat</p>
+					</ReactTooltip>
+					<Text
+						data-tip
+						data-for='search'
+						d={{ base: 'none', md: 'flex' }}
+						px={4}
+					>
+						User Search
+					</Text>
+				</Button>
+
 				<Text fontSize='2xl' fontFamily='Montserrat'>
 					Chit-Chat
 				</Text>
@@ -54,13 +84,13 @@ export default function SideDrawer() {
 					<Menu>
 						<MenuButton p={1}>
 							<NotificationBadge
-								/* count={notification.length}
+							/* count={notification.length}
 								effect={Effect.SCALE} */
 							/>
 							<BellIcon fontSize='2xl' m={1} />
 						</MenuButton>
 						<MenuList pl={2}>
-{/* 							{!notification.length && 'No New Messages'}
+							{/* 							{!notification.length && 'No New Messages'}
 							{notification.map(notif => (
 								<MenuItem
 									key={notif._id}
@@ -119,7 +149,7 @@ export default function SideDrawer() {
 							/>
 							<Button>Go</Button>
 						</Box>
-{/* 						{loading ? (
+						{/* 						{loading ? (
 							<ChatLoading />
 						) : (
 							searchResult?.map(user => (
