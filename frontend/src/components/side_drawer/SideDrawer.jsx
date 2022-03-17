@@ -25,6 +25,7 @@ import { BellIcon, ChevronDownIcon, Search2Icon } from '@chakra-ui/icons';
 import { Avatar } from '@chakra-ui/avatar';
 import { useToast } from '@chakra-ui/toast';
 import NotificationBadge, { Effect } from 'react-notification-badge';
+import ProfileModal from './ProfileModal';
 
 export default function SideDrawer() {
 	//**************** variables ****************//
@@ -45,6 +46,12 @@ export default function SideDrawer() {
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const history = useHistory();
+
+	//**************** functions ****************//
+	const signOutHandler = () => {
+		localStorage.removeItem('userInfo');
+		history.push('/');
+	};
 	return (
 		<>
 			<Box
@@ -120,16 +127,16 @@ export default function SideDrawer() {
 							<Avatar
 								size='sm'
 								cursor='pointer'
-								/* name={user.name} */
-								// src={user.pic}
+								name={user.name}
+								src={user.pic}
 							/>
 						</MenuButton>
 						<MenuList>
-							{/* <ProfileModal user={user}>
-								<MenuItem>My Profile</MenuItem>{' '}
+							<ProfileModal user={user}>
+								<MenuItem>My Profile</MenuItem>
 							</ProfileModal>
 							<MenuDivider />
-							<MenuItem onClick={logoutHandler}>Logout</MenuItem> */}
+							<MenuItem onClick={signOutHandler}>Sign Out</MenuItem>
 						</MenuList>
 					</Menu>
 				</div>
