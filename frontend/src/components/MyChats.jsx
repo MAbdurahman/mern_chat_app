@@ -7,6 +7,7 @@ import { Button } from '@chakra-ui/react/';
 import { ChatState } from './../context/chatContext';
 import { getSender } from '../config/chatLogicsConfig';
 import ChatLoading from './ChatLoading';
+import GroupChatModal from '../modals/GroupChatModal';
 
 export default function MyChats({ fetchAgain }) {
 	//**************** variables ****************//
@@ -65,14 +66,16 @@ export default function MyChats({ fetchAgain }) {
 				alignItems='center'
 			>
 				My Chats
-				<Button
-					d='flex'
-					fontFamily='Montserrat'
-					fontSize={{ base: '17px', md: '10px', lg: '17px' }}
-					rightIcon={<AddIcon />}
-				>
-					New Group Chat
-				</Button>
+				<GroupChatModal>
+					<Button
+						d='flex'
+						fontFamily='Montserrat'
+						fontSize={{ base: '17px', md: '10px', lg: '17px' }}
+						rightIcon={<AddIcon />}
+					>
+						New Group Chat
+					</Button>
+				</GroupChatModal>
 			</Box>
 			<Box
 				d='flex'
@@ -107,7 +110,7 @@ export default function MyChats({ fetchAgain }) {
 										<b>{chat.latestMessage.sender.name} : </b>
 										{chat.latestMessage.content.length > 50
 											? chat.latestMessage.content.substring(0, 51) +
-											'...'
+											  '...'
 											: chat.latestMessage.content}
 									</Text>
 								)}
