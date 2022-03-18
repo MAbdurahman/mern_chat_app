@@ -30,6 +30,7 @@ import ProfileModal from '../../modals/ProfileModal';
 import ChatLoading from './../ChatLoading';
 import UserListItem from '../avatar/UserListItem';
 
+
 export default function SideDrawer() {
 	//**************** variables ****************//
 	const [search, setSearch] = useState('');
@@ -193,7 +194,18 @@ export default function SideDrawer() {
 						</MenuList>
 					</Menu>
 					<Menu>
+						<ReactTooltip
+							id='menu-button'
+							aria-haspopup='true'
+							place='top'
+							type='dark'
+							effect='float'
+						>
+							<p>View Profile or Sign Out</p>
+						</ReactTooltip>
 						<MenuButton
+							data-tip 
+							data-for='menu-button'
 							as={Button}
 							bg='white'
 							rightIcon={<ChevronDownIcon />}
