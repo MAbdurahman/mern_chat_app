@@ -59,7 +59,7 @@ export default function SideDrawer() {
 	const handleSearch = async () => {
 		if (!search) {
 			toast({
-				title: 'Enter something to search in text field!',
+				title: 'Enter name or email to search!',
 				status: 'warning',
 				duration: 5000,
 				isClosable: true,

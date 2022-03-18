@@ -112,7 +112,20 @@ export default function MyChats({ fetchAgain }) {
 								borderRadius='lg'
 								key={chat._id}
 							>
-								<Text fontFamily='Anonymous Pro'>
+								<ReactTooltip
+									id='user-textfield'
+									aria-haspopup='true'
+									place='top'
+									type='dark'
+									effect='float'
+								>
+									<p>Click on user to chat</p>
+								</ReactTooltip>
+								<Text
+									data-tip
+									data-for='user-textfield'
+									fontFamily='Anonymous Pro'
+								>
 									{!chat.isGroupChat
 										? getSender(loggedUser, chat.users)
 										: chat.chatName}
@@ -122,7 +135,7 @@ export default function MyChats({ fetchAgain }) {
 										<b>{chat.latestMessage.sender.name} : </b>
 										{chat.latestMessage.content.length > 50
 											? chat.latestMessage.content.substring(0, 51) +
-											  '...'
+											'...'
 											: chat.latestMessage.content}
 									</Text>
 								)}
