@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@chakra-ui/layout';
-import { ChatState } from './../context/chatContext';
+import { ChatState } from '../context/chatContext';
 import SingleChat from './SingleChat';
 
 
