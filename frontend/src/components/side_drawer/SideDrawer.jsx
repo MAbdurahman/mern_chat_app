@@ -26,7 +26,7 @@ import { Avatar } from '@chakra-ui/avatar';
 import { useToast } from '@chakra-ui/toast';
 import { Spinner } from '@chakra-ui/spinner';
 import NotificationBadge, { Effect } from 'react-notification-badge';
-import ProfileModal from './ProfileModal';
+import ProfileModal from '../../modals/ProfileModal';
 import ChatLoading from './../ChatLoading';
 import UserListItem from '../avatar/UserListItem';
 
