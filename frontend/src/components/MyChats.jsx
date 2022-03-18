@@ -4,6 +4,7 @@ import { Box, Stack, Text } from '@chakra-ui/layout';
 import { useToast } from '@chakra-ui/toast';
 import axios from 'axios';
 import { Button } from '@chakra-ui/react/';
+import ReactTooltip from 'react-tooltip';
 import { ChatState } from './../context/chatContext';
 import { getSender } from '../config/chatLogicsConfig';
 import ChatLoading from './ChatLoading';
@@ -67,7 +68,18 @@ export default function MyChats({ fetchAgain }) {
 			>
 				My Chats
 				<GroupChatModal>
+					<ReactTooltip
+						id='group-button'
+						aria-haspopup='true'
+						place='top'
+						type='dark'
+						effect='float'
+					>
+						<p>Create new Chat Croup</p>
+					</ReactTooltip>
 					<Button
+						data-tip
+						data-for='group-button'
 						d='flex'
 						fontFamily='Montserrat'
 						fontSize={{ base: '17px', md: '10px', lg: '17px' }}
