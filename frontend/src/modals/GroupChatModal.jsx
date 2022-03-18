@@ -31,19 +31,104 @@ export default function GroupChatModal({ children }) {
 	const { user, chats, setChats } = ChatState();
 
 	//**************** functions ****************//
-	const handleGroup = () => {
-		console.log('handleGroup');
+	const handleGroup = userToAdd => {
+		if (selectedUsers.includes(userToAdd)) {
+			toast({
+				title: 'User Already In Group!',
+				status: 'warning',
+				duration: 5000,
+				isClosable: true,
+				position: 'top',
+			});
+			return;
+		}
+
+		setSelectedUsers([...selectedUsers, userToAdd]);
 	};
 
-	const handleSearch = async () => {
-		console.log('handleSearch');
+	const handleSearch = async query => {
+		setSearch(query);
+		if (!query) {
+			return;
+		}
+
+		try {
+			setLoading(true);
+			const config = {
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+			const { data } = await axios.get(
+				`/api/v1/user?search=${search}`,
+				config
+			);
+			console.log(data);
+			setLoading(false);
+			setSearchResult(data);
+		} catch (error) {
+			toast({
+				title: 'Error Occurred!',
+				description: 'Failed To Load The Search Results!',
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+				position: 'bottom-left',
+			});
+		}
 	};
 
-	const handleDelete = () => {
-		console.log('handleDelete');
+	const handleDelete = userToDelete => {
+		setSelectedUsers(selectedUsers.filter(sel => sel._id !== userToDelete._id));
 	};
 
-	const handleSubmit = async () => {};
+	const handleSubmit = async () => {
+		if (!groupChatName || !selectedUsers) {
+			toast({
+				title: 'Enter Values For All Fields!',
+				status: 'warning',
+				duration: 5000,
+				isClosable: true,
+				position: 'top',
+			});
+			return;
+		}
+
+		try {
+			const config = {
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+			const { data } = await axios.post(
+				`/api/v1/chats/create-group`,
+				{
+					name: groupChatName,
+					users: JSON.stringify(selectedUsers.map(u => u._id)),
+				},
+				config
+			);
+			setChats([data, ...chats]);
+			onClose();
+			toast({
+				title: 'New Group Chat Created!',
+				status: 'success',
+				duration: 5000,
+				isClosable: true,
+				position: 'bottom',
+			});
+		} catch (error) {
+			toast({
+				title: 'Failed To Create The Chat Group!',
+				description: error.response.data,
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+				position: 'bottom',
+			});
+		}
+	};
+
 	return (
 		<>
 			<span onClick={onOpen}>{children}</span>
@@ -85,7 +170,6 @@ export default function GroupChatModal({ children }) {
 							))}
 						</Box>
 						{loading ? (
-							// <ChatLoading />
 							<div>Loading...</div>
 						) : (
 							searchResult
