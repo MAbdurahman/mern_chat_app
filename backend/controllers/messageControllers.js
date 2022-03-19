@@ -1,29 +1,51 @@
 const asyncHandler = require('express-async-handler');
-const message = require('./../models/messageModel');
-const chat = require('./../models/chatModel');
-const user = require('./../models/userModel');
-
+const Message = require('./../models/messageModel');
+const Chat = require('./../models/chatModel');
+const User = require('./../models/userModel');
 
 /*============================================================
-      getAllMessages(GET) -> /api/v1/messages/:chatId
+      getUserMessages(GET) -> /api/v1/messages/:chatId
 ===============================================================*/
-const getAllMessages = asyncHandler( async(req, res) => {
-   console.log('getAllMessages')
-})
-
-
-
-
-
-
-
-
+const getUserMessages = asyncHandler(async (req, res) => {
+	console.log('getUserMessages');
+});
 
 /*=========================================================
-      sendMessage(POST) -> /api/v1/messages/
+      sendUserMessage(POST) -> /api/v1/messages/
 ============================================================*/
-const sendMessage = asyncHandler( async(req, res) => {
-   console.log('sendMessage')
-})
+const sendUserMessage = asyncHandler(async (req, res) => {
+	const { content, chatId } = req.body;
 
-module.exports = { getAllMessages, sendMessage };
+	if (!content || !chatId) {
+		console.log('Invalid data passed into request!');
+		return res.sendStatus(400);
+	}
+
+	let newMessage = {
+		sender: req.user._id,
+		content: content,
+		chat: chatId,
+	};
+
+	try {
+		let message = await Message.create(newMessage);
+
+		message = await message.populate('sender', 'name pic');
+		message = await message.populate('chat');
+		message = await User.populate(message, {
+			path: 'chat.users',
+			select: 'name pic email',
+		});
+
+		await Chat.findByIdAndUpdate(req.body.chatId, {
+			latestMessage: message,
+		});
+
+		res.json(message);
+	} catch (error) {
+		res.status(400);
+		throw new Error(error.message);
+	}
+});
+
+module.exports = { getUserMessages, sendUserMessage };
