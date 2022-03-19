@@ -1,4 +1,5 @@
 const express = require('express');
+const { protected } = require('./../middlewares/authMiddleware');
 const {
 	accessChat,
 	addToGroup,
@@ -7,7 +8,6 @@ const {
 	removeFromGroup,
 	renameGroup,
 } = require('./../controllers/chatControllers');
-const { protected } = require('./../middlewares/authMiddleware');
 
 //**************** variable ****************//
 const router = express.Router();
