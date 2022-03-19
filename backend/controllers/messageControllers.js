@@ -4,16 +4,26 @@ const Chat = require('./../models/chatModel');
 const User = require('./../models/userModel');
 
 /*============================================================
-      getUserMessages(GET) -> /api/v1/messages/:chatId
+      getChatMessages(GET) -> /api/v1/messages/:chatId
 ===============================================================*/
-const getUserMessages = asyncHandler(async (req, res) => {
-	console.log('getUserMessages');
+const getChatMessages = asyncHandler(async (req, res) => {
+	try {
+		const messages = await Message.find({ chat: req.params.chatId })
+			.populate('sender', 'name pic email')
+			.populate('chat');
+		res.json(messages);
+
+	} catch (error) {
+		res.status(400);
+		throw new Error(error.message);
+
+	}
 });
 
 /*=========================================================
-      sendUserMessage(POST) -> /api/v1/messages/
+      sendChatMessage(POST) -> /api/v1/messages/
 ============================================================*/
-const sendUserMessage = asyncHandler(async (req, res) => {
+const sendChatMessage = asyncHandler(async (req, res) => {
 	const { content, chatId } = req.body;
 
 	if (!content || !chatId) {
@@ -48,4 +58,4 @@ const sendUserMessage = asyncHandler(async (req, res) => {
 	}
 });
 
-module.exports = { getUserMessages, sendUserMessage };
+module.exports = { getChatMessages, sendChatMessage };
