@@ -46,8 +46,7 @@ export default function SignIn() {
 				{ email, password },
 				config
 			);
-
-			// console.log(JSON.stringify(data));
+			
 			toast({
 				title: 'Successfully Signed In!',
 				status: 'success',

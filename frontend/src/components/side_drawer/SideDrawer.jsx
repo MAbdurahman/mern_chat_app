@@ -26,10 +26,10 @@ import { Avatar } from '@chakra-ui/avatar';
 import { useToast } from '@chakra-ui/toast';
 import { Spinner } from '@chakra-ui/spinner';
 import NotificationBadge, { Effect } from 'react-notification-badge';
+import { getSender } from '../../config/chatLogicsConfig';
 import ProfileModal from '../../modals/ProfileModal';
 import ChatLoading from './../ChatLoading';
 import UserListItem from '../avatar/UserListItem';
-
 
 export default function SideDrawer() {
 	//**************** variables ****************//
@@ -85,7 +85,6 @@ export default function SideDrawer() {
 
 			setLoading(false);
 			setSearchResult(data);
-			
 		} catch (error) {
 			toast({
 				title: 'Error Occurred!',
@@ -166,31 +165,31 @@ export default function SideDrawer() {
 					<Menu>
 						<MenuButton p={1}>
 							<NotificationBadge
-							/* count={notification.length}
-								effect={Effect.SCALE} */
+							count={notification.length}
+								effect={Effect.SCALE} 
 							/>
 							<BellIcon fontSize='2xl' m={1} />
 						</MenuButton>
 						<MenuList pl={2}>
-							{/* 							{!notification.length && 'No New Messages'}
-							{notification.map(notif => (
+							{!notification.length && 'No New Messages'}
+							{notification.map(notify => (
 								<MenuItem
-									key={notif._id}
+									key={notify._id}
 									onClick={() => {
-										setSelectedChat(notif.chat);
+										setSelectedChat(notify.chat);
 										setNotification(
-											notification.filter(n => n !== notif)
+											notification.filter(n => n !== notify)
 										);
 									}}
 								>
-									{notif.chat.isGroupChat
-										? `New Message in ${notif.chat.chatName}`
+									{notify.chat.isGroupChat
+										? `New Message in ${notify.chat.chatName}`
 										: `New Message from ${getSender(
 												user,
-												notif.chat.users
-										  )}`}
+												notify.chat.users
+										)}`}
 								</MenuItem>
-							))} */}
+							))}
 						</MenuList>
 					</Menu>
 					<Menu>
@@ -204,7 +203,7 @@ export default function SideDrawer() {
 							<p>View Profile or Sign Out</p>
 						</ReactTooltip>
 						<MenuButton
-							data-tip 
+							data-tip
 							data-for='menu-button'
 							as={Button}
 							bg='white'

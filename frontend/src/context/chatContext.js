@@ -11,7 +11,7 @@ const ChatProvider = ({ children }) => {
 	const [chats, setChats] = useState([]);
 
 	const history = useHistory();
-   
+
 	//**************** functions ****************//
 	useEffect(() => {
 		const userInfo = JSON.parse(localStorage.getItem('userInfo'));
