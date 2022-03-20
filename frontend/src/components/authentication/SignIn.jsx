@@ -42,7 +42,7 @@ export default function SignIn() {
 			};
 
 			const { data } = await axios.post(
-				'/api/v1/user/signin',
+				'/api/v1/user/sign-in',
 				{ email, password },
 				config
 			);

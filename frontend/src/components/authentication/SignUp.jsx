@@ -53,7 +53,7 @@ export default function SignUp() {
 				},
 			};
 			const { data } = await axios.post(
-				'/api/v1/user/signup',
+				'/api/v1/user/sign-up',
 				{
 					name,
 					email,

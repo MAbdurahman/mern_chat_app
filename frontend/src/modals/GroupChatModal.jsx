@@ -63,7 +63,7 @@ export default function GroupChatModal({ children }) {
 				`/api/v1/user?search=${search}`,
 				config
 			);
-			console.log(data);
+		
 			setLoading(false);
 			setSearchResult(data);
 		} catch (error) {

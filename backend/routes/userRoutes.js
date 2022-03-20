@@ -12,7 +12,7 @@ const router = express.Router();
 
 //**************** user routes ****************//
 router.route('/').get(protected, getAllUsers);
-router.route('/signup').post(signUpUser);
-router.route('/signin').post(signInUser);
+router.route('/sign-up').post(signUpUser);
+router.route('/sign-in').post(signInUser);
 
 module.exports = router;
