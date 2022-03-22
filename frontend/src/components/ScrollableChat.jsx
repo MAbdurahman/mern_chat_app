@@ -3,7 +3,6 @@ import { Avatar } from '@chakra-ui/avatar';
 import { Tooltip } from '@chakra-ui/tooltip';
 import ScrollableFeed from 'react-scrollable-feed';
 import { ChatState } from './../context/chatContext';
-import { ReactTooltip } from 'react-tooltip';
 import {
 	isLastMessage,
 	isSameSender,
@@ -23,8 +22,9 @@ export default function ScrollableChat({ messages }) {
 						{(isSameSender(messages, m, i, user._id) ||
 							isLastMessage(messages, i, user._id)) && (
 							<Tooltip
+							letterSpacing='1px'
 								label={m.sender.name}
-								placement='bottom-start'
+								placement='top-start'
 								hasArrow
 							>
 								<Avatar
