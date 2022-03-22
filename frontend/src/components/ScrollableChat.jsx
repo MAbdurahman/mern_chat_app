@@ -40,8 +40,13 @@ export default function ScrollableChat({ messages }) {
 						<span
 							style={{
 								backgroundColor: `${
-									m.sender._id === user._id ? '#B8BDB5' : '#4c89cf'
+									m.sender._id === user._id ? '#094283' : '#4880d4'
 								}`,
+								fontFamily: 'Anonymous Pro',
+								color: `${
+									m.sender._id === user.id ? '#ffffff' : '#ffffff'
+								}`,
+								letterSpacing: '1px',
 								marginLeft: isSameSenderMargin(
 									messages,
 									m,

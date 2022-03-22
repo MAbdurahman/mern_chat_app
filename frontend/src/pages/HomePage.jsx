@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router';
+// import { useNavigate } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import {
 	Box,
 	Container,
@@ -16,12 +17,16 @@ import SignUp from '../components/authentication/SignUp';
 export default function HomePage() {
 	//**************** variables ****************//
 	const history = useHistory();
+	// const navigate = useNavigate();
 
 	//**************** functions ****************//
 	useEffect(() => {
 		const user = JSON.parse(localStorage.getItem('userInfo'));
 
-		if (user) history.push('/chats');
+		if (user) {
+			history.push('/chats');
+		}
+		// if (user) navigate('/chats');
 	}, [history]);
 
 	return (

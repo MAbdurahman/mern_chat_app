@@ -7,10 +7,13 @@ import { useToast } from '@chakra-ui/toast';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 
+// import { useNavigate } from 'react-router-dom';
+
 export default function SignUp() {
 	//**************** variables ****************//
 	const toast = useToast();
 	const history = useHistory();
+	// const navigate = useNavigate();
 	const [show, setShow] = useState(false);
 	const [name, setName] = useState();
 	const [email, setEmail] = useState();
@@ -73,6 +76,7 @@ export default function SignUp() {
 			localStorage.setItem('userInfo', JSON.stringify(data));
 			setPicLoading(false);
 			history.push('/chats');
+			// navigate('/chats');
 
 		} catch (error) {
 			toast({

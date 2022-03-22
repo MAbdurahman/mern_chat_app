@@ -5,6 +5,7 @@ import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { VStack } from '@chakra-ui/layout';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
+// import { useNavigate } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
 export default function SignIn() {
@@ -14,6 +15,7 @@ export default function SignIn() {
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
 	const [loading, setLoading] = useState(false);
+	// const navigate = useNavigate();
 	const history = useHistory();
 
 	//**************** functions ****************//
@@ -33,7 +35,6 @@ export default function SignIn() {
 			return;
 		}
 
-		// console.log(email, password);
 		try {
 			const config = {
 				headers: {
@@ -55,7 +56,8 @@ export default function SignIn() {
 				position: 'top-right',
 			});
 			localStorage.setItem('userInfo', JSON.stringify(data));
-			setLoading(false);
+			// setLoading(false);
+			// navigate('/chats');
 			history.push('/chats');
 
 		} catch (error) {
@@ -116,7 +118,7 @@ export default function SignIn() {
 					setPassword('abcd1234');
 				}}
 			>
-				Guest User Credentials
+				Guest Sign In
 			</Button>
 		</VStack>
 	);
