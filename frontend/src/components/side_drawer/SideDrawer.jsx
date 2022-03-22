@@ -153,6 +153,8 @@ export default function SideDrawer() {
 						data-for='search'
 						d={{ base: 'none', md: 'flex' }}
 						px={4}
+						fontFamily='Montserrat'
+						letterSpacing='1px'
 					>
 						User Search
 					</Text>
@@ -165,8 +167,8 @@ export default function SideDrawer() {
 					<Menu>
 						<MenuButton p={1}>
 							<NotificationBadge
-							count={notification.length}
-								effect={Effect.SCALE} 
+								count={notification.length}
+								effect={Effect.SCALE}
 							/>
 							<BellIcon fontSize='2xl' m={1} />
 						</MenuButton>
@@ -187,7 +189,7 @@ export default function SideDrawer() {
 										: `New Message from ${getSender(
 												user,
 												notify.chat.users
-										)}`}
+										  )}`}
 								</MenuItem>
 							))}
 						</MenuList>
@@ -230,7 +232,13 @@ export default function SideDrawer() {
 			<Drawer placement='left' onClose={onClose} isOpen={isOpen}>
 				<DrawerOverlay />
 				<DrawerContent>
-					<DrawerHeader borderBottomWidth='1px'>Search Users</DrawerHeader>
+					<DrawerHeader
+						fontFamily='Montserrat'
+						letterSpacing='1px'
+						borderBottomWidth='1px'
+					>
+						Search Users
+					</DrawerHeader>
 					<DrawerBody>
 						<Box d='flex' pb={2}>
 							<Input

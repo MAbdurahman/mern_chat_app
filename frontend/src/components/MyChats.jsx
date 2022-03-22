@@ -83,6 +83,7 @@ export default function MyChats({ fetchAgain }) {
 						d='flex'
 						fontFamily='Montserrat'
 						fontSize={{ base: '17px', md: '10px', lg: '17px' }}
+						letterSpacing='1px'
 						rightIcon={<AddIcon />}
 					>
 						New Group Chat
