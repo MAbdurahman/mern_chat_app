@@ -7,7 +7,7 @@ export default function App() {
 	return (
 		<div className='app'>
 			<Route path='/' component={HomePage} exact />
-			<Route path='/chats' component={ChatPage} />
+			<Route path='/chats' component={ChatPage} exact />
 		</div>
 	);
 }

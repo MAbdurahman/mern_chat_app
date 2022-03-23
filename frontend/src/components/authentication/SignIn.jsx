@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 
+
 export default function SignIn() {
 	//**************** variables ****************//
 	const [show, setShow] = useState(false);
@@ -20,6 +21,7 @@ export default function SignIn() {
 	const handleClick = () => setShow(!show);
 
 	const submitHandler = async () => {
+	
 		setLoading(true);
 		if (!email || !password) {
 			toast({
@@ -54,8 +56,7 @@ export default function SignIn() {
 				position: 'top-right',
 			});
 			localStorage.setItem('userInfo', JSON.stringify(data));
-			// setLoading(false);
-			// navigate('/chats');
+			setLoading(false);
 			history.push('/chats');
 
 		} catch (error) {
