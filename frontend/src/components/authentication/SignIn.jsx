@@ -5,7 +5,6 @@ import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { VStack } from '@chakra-ui/layout';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
-// import { useNavigate } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
 export default function SignIn() {
@@ -15,7 +14,6 @@ export default function SignIn() {
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
 	const [loading, setLoading] = useState(false);
-	// const navigate = useNavigate();
 	const history = useHistory();
 
 	//**************** functions ****************//
@@ -108,17 +106,6 @@ export default function SignIn() {
 				isLoading={loading}
 			>
 				Sign In
-			</Button>
-			<Button
-				variant='solid'
-				colorScheme='red'
-				width='100%'
-				onClick={() => {
-					setEmail('guest@example.com');
-					setPassword('abcd1234');
-				}}
-			>
-				Guest Sign In
 			</Button>
 		</VStack>
 	);

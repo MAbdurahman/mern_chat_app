@@ -120,8 +120,6 @@ export default function SingleChat({ fetchAgain, setFetchAgain }) {
 		}
 	};
 
-
-
 	useEffect(() => {
 		socket = io(ENDPOINT);
 		socket.emit('setup', user);
